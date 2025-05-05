@@ -20,7 +20,7 @@ def add_book(new_book: Book):
     if new_book.id in book:
         raise HTTPException(status_code=403, detail="Book ID already exists.")
     book[new_book.id] = new_book
-    return "Book successfully added."
+    return {"message": "Book successfully added."}
 
 @router.delete("/")
 def delete_all_books():
