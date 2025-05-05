@@ -9,6 +9,7 @@
     <p style="text-align: center; color: green;">{{ message }}</p>
   {% endif %}
 {% endif %}
+
 <form style="text-align: center" action="/add_book" method="post">
   <label for="id">Scegli l'ID:</label><br>
   <input type="number" id="id" name="id" min="0" max="10" required><br>
@@ -21,6 +22,6 @@
   <input type="submit" value="Aggiungi">
 </form>
 
-<input type="button" onclick="window.location.href='/add_book'" value="Annulla">
+<input type="button" onclick="window.location.href='/del_all_books'" value="Elimina tutti i libri">
 
 {% endblock %}
