@@ -26,9 +26,9 @@ def show_add_book_form(request: Request):
     return templates.TemplateResponse(request=request, name="add.html")
 @router.post("/add_book", response_class=HTMLResponse)
 def add_book_form(request: Request, id: int = Form(...), title: str = Form(...), author: str = Form(...), review: int = Form(...)):
-    """book = Book(id=id, title=title, author=author, review=review)"""
+    new_book = Book(id=id, title=title, author=author, review=review)
     try:
-        result = add_book(book)  # <-- chiama la funzione del router books
+        result = add_book(new_book)  # <-- chiama la funzione del router books
         message = result["message"]
     except HTTPException as error:
         message = error.detail

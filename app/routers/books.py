@@ -15,9 +15,9 @@ def get_all_books(sort: bool = False) -> list[Book]:
 @router.post("/")
 def add_book(new_book: Book):
     """Adds a new book."""
-    if book.id in new_book:
+    if new_book.id in book:
         raise HTTPException(status_code=403, detail="Book ID already exists.")
-    book[book.id] = book
+    book[new_book.id] = new_book
     return "Book successfully added."
 @router.delete("/")
 def delete_all_books():
@@ -25,9 +25,7 @@ def delete_all_books():
     book.clear()
     return "All books successfully deleted"
 @router.delete("/{id}")
-def delete_book(
-    id: Annotated[int, Path(description="The ID of the book to delete")]
-):
+def delete_book(id: Annotated[int, Path(description="The ID of the book to delete")]):
     """Deletes the book with the given ID."""
     try:
         del book[id]
@@ -35,19 +33,14 @@ def delete_book(
     except KeyError:
         raise HTTPException(status_code=404, detail="Book not found")
 @router.get("/{id}")
-def get_book_by_id(
-        id: Annotated[int, Path(description="The ID of the book to get")]
-) -> Book:
+def get_book_by_id(id: Annotated[int, Path(description="The ID of the book to get")]) -> Book:
     """Returns the book with the given id."""
     try:
         return book[id]
     except KeyError:
         raise HTTPException(status_code=404, detail="Book not found")
 @router.post("/{id}/review")
-def add_review(
-        id: Annotated[int, Path(description="The ID of the book to which add the review")],
-        review: Review
-):
+def add_review(id: Annotated[int, Path(description="The ID of the book to which add the review")],review: Review):
     """Adds a review to the book with the given ID."""
     try:
         book[id].review = review.review
@@ -55,9 +48,7 @@ def add_review(
     except KeyError:
         raise HTTPException(status_code=404, detail="Book not found")
 @router.put("/{id}")
-def update_book(
-        id: Annotated[int, Path(description="The ID of the book to update")],
-        book: Book
+def update_book(id: Annotated[int, Path(description="The ID of the book to update")], book: Book
 ):
     """Updates the book with the given ID."""
     if not id in book:
