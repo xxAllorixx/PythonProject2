@@ -22,23 +22,5 @@
   <input type="submit" value="Aggiungi">
 </form>
 
-<button type="button" onclick="deleteallbooks()">Elimina tutti i libri</button>
-
-<script>
-  function deleteallbooks() {
-    fetch('/del_all_books', {
-      method: 'DELETE'  // Metodo DELETE
-    })
-    .then(response => response.json())  // Se la risposta è JSON, analizzala
-    .then(data => {
-      console.log(data);
-      alert(data.message);  // Mostra il messaggio di successo
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Si è verificato un errore!');
-    });
-  }
-</script>
 
 {% endblock %}
