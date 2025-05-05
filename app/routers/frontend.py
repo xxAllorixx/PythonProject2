@@ -26,13 +26,7 @@ def show_add_book_form(request: Request):
     return templates.TemplateResponse(request=request, name="add.html")
 @router.post("/add_book", response_class=HTMLResponse)
 def add_book_form(request: Request, id: int = Form(...), title: str = Form(...), author: str = Form(...), review: int = Form(...)):
-    """if id in book:
-        message = "ID già esistente!"
-    else:
-        book[id] = Book(id=id, title=title, author=author, review=review)
-        message = "Libro aggiunto con successo!" """
     book = Book(id=id, title=title, author=author, review=review)
-
     try:
         result = add_book(book)  # <-- chiama la funzione del router books
         message = result["message"]

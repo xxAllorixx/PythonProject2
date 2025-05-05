@@ -1,11 +1,6 @@
 {% extends "base.html" %}
 {%  block content %}
 
-<!-- Messaggio di feedback -->
-{% if message %}
-  <p style="text-align: center; color: #800000;">{{ message }}</p>
-{% endif %}
-
 <form style="text-align: center" action="/add_book" method="post">
   <label for="id">Scegli l'ID:</label><br>
   <input type="number" id="id" name="id" min="0" max="10"><br>
