@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from app.data.books import book
 from app.routers.books import add_book
+from app.models.book import Book
 from fastapi import Form
 
 templates = Jinja2Templates(directory="app/templates")
@@ -30,6 +31,8 @@ def add_book_form(request: Request, id: int = Form(...), title: str = Form(...),
     else:
         book[id] = Book(id=id, title=title, author=author, review=review)
         message = "Libro aggiunto con successo!" """
+    book = Book(id=id, title=title, author=author, review=review)
+
     try:
         result = add_book(book)  # <-- chiama la funzione del router books
         message = result["message"]
