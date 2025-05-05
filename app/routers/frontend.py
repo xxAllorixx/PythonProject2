@@ -36,7 +36,7 @@ def add_book_form(request: Request, id: int = Form(...), title: str = Form(...),
     except HTTPException as e:
         message = e.detail
 
-    return templates.TemplateResponse(request=request, name="add.html", context = {"context": message})
+    return templates.TemplateResponse(request=request, name="add.html", context = message)
 
 
 
