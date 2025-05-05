@@ -13,9 +13,9 @@ def get_all_books(sort: bool = False) -> list[Book]:
     else:
         return list(book.values())
 @router.post("/")
-def add_book(book: Book):
+def add_book(new_book: Book):
     """Adds a new book."""
-    if book.id in book:
+    if book.id in new_book:
         raise HTTPException(status_code=403, detail="Book ID already exists.")
     book[book.id] = book
     return "Book successfully added."
