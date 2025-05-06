@@ -20,11 +20,10 @@
   <label for="review">Review:</label><br>
   <input type="number" id="review" name="review" min="1" max="5" required><br><br>
   <input type="submit" value="Aggiungi">
+  <!--<button onclick="window.location.href='/'" formnovalidate>Elimina libro</button>-->
+  <button type="submit" formaction="/delete_all_books"  formmethod="post" onclick="return confirm('Sei sicuro di voler eliminare tutti i libri?');" formnovalidate>
+    Elimina tutti i libri
+  </button>
 </form>
-<div style="text-align: center" >
-  <button type="reset" >Elimina tutti i libri</button>
-</div>
-
-
 
 {% endblock %}

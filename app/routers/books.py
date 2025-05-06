@@ -26,7 +26,7 @@ def add_book(new_book: Book):
 def delete_all_books():
     """Deletes all books."""
     book.clear()
-    return {"message": "All books successfully deleted."}
+    return "All books successfully deleted."
 
 @router.delete("/{id}")
 def delete_book(id: Annotated[int, Path(description="The ID of the book to delete")]):

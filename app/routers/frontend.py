@@ -7,7 +7,6 @@ from app.models.book import Book
 from app.routers.books import add_book
 from app.routers.books import delete_all_books
 
-
 templates = Jinja2Templates(directory="app/templates")
 router = APIRouter()
 
@@ -41,7 +40,7 @@ def add_book_form(request: Request, id: int = Form(...), title: str = Form(...),
 
     return templates.TemplateResponse(request=request, name="edit.html",context = {"message": message})
 
-@router.delete("/delete_all_books", response_class=HTMLResponse)
+@router.post("/delete_all_books", response_class=HTMLResponse)
 def del_all_books(request: Request):
     message = delete_all_books()
     return templates.TemplateResponse(request=request, name="edit.html",context = {"message": message})
