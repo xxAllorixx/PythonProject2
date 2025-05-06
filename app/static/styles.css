@@ -75,3 +75,12 @@ input[type=submit], input[type=reset] {
     padding: 16px 32px;
     cursor: pointer;
 }
+button{
+    margin-top: 10px;
+    font-size: 16px;
+    background: #005599;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    cursor: pointer;
+}
