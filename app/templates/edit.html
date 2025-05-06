@@ -5,9 +5,10 @@
 {% if message %}
   {% if "Book ID already exists." in message %}
     <p style="text-align: center; color: red;">{{ message }}</p>
-  {% else if "Book successfully added." in message%}
+  {% elif "Book successfully added." in message%}
     <p style="text-align: center; color: green;">{{ message }}</p>
-  {% else if "All books successfully deleted." in message%}
+  {% elif "All books successfully deleted." in message%}
+    <p style="text-align: center; color: green;">{{ message }}</p>
   {% endif %}
 {% endif %}
 
