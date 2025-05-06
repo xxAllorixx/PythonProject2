@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from app.routers import frontend
+from app.routers import frontend, books
 
 app = FastAPI()
-"""app.include_router(books.router, tags=["books"])"""
+app.include_router(books.router, tags=["books"])
 app.include_router(frontend.router)
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
