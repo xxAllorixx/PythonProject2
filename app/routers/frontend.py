@@ -1,11 +1,9 @@
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, Request, HTTPException, Query, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Form
 from app.data.books import book
 from app.models.book import Book
-from app.routers.books import add_book
-from app.routers.books import delete_all_books
+from app.routers.books import add_book, delete_book, delete_all_books, get_book_by_id
 
 templates = Jinja2Templates(directory="app/templates")
 router = APIRouter()
@@ -44,6 +42,32 @@ def add_book_form(request: Request, id: int = Form(...), title: str = Form(...),
 def del_all_books(request: Request):
     message = delete_all_books()
     return templates.TemplateResponse(request=request, name="edit.html",context = {"message": message})
+
+@router.post("/delete_a_book", response_class=HTMLResponse)
+def del_a_book(request: Request, id: int = Form(...)):
+    try:
+        result = delete_book(id)  # <-- chiama la funzione del router books
+        message = result["message"]
+    except HTTPException as error:
+        message = error.detail
+
+    return templates.TemplateResponse(request=request, name="edit.html", context={"message": message})
+@router.get("/search", response_class=HTMLResponse)
+def show_search_form(request: Request):
+    return templates.TemplateResponse(request=request, name="search.html")
+@router.get("/find_a_book", response_class=HTMLResponse)
+def get_book(request: Request, id: int = Query(...)):
+    try:
+        result = get_book_by_id(id)  # <-- chiama la funzione del router books
+        message = f"Libro con {result} è stato trovato."
+    except HTTPException as error:
+        message = error.detail
+
+    return templates.TemplateResponse(request=request, name="search.html", context={"message": message})
+
+
+
+
 
 
 

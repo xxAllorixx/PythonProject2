@@ -33,7 +33,7 @@ def delete_book(id: Annotated[int, Path(description="The ID of the book to delet
     """Deletes the book with the given ID."""
     try:
         del book[id]
-        return "Book successfully deleted"
+        return {"message": "Book successfully deleted"}
     except KeyError:
         raise HTTPException(status_code=404, detail="Book not found")
 
