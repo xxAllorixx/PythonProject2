@@ -5,13 +5,15 @@
   <label for="id">Inserisci l'ID del libro che vuoi cercare:</label><br>
   <input type="text" id="id" name="id" min="0" max="10" required><br>
   <!-- Messaggio di feedback -->
-  {% if message %}
-    {% if "Book not found" in message%}
-      <p style="text-align: center; color: red;">{{ message }}</p>
-    {% else%}
-      <p style="text-align: center; color: green;">{{ message }}</p>
+  <div style="min-height: 3em;">
+    {% if message %}
+      {% if "Book not found" in message%}
+        <p style="text-align: center; color: red;">{{ message }}</p>
+      {% else%}
+        <p style="text-align: center; color: green;">{{ message }}</p>
+      {% endif %}
     {% endif %}
-  {% endif %}
+  </div>
 
   <button type="submit">Search</button>
 
