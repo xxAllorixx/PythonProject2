@@ -52,9 +52,11 @@ def del_a_book(request: Request, id: int = Form(...)):
         message = error.detail
 
     return templates.TemplateResponse(request=request, name="edit.html", context={"message": message})
+
 @router.get("/search", response_class=HTMLResponse)
 def show_search_form(request: Request):
     return templates.TemplateResponse(request=request, name="search.html")
+
 @router.get("/find_a_book", response_class=HTMLResponse)
 def get_book(request: Request, id: int = Query(...)):
     try:

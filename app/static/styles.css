@@ -87,3 +87,20 @@ button{
     padding: 16px 32px;
     cursor: pointer;
 }
+
+.star-rating{
+    user-select: none;
+}
+
+.star{
+    font-size: 2rem;
+    color: #ff9800;
+    background-color: unset;
+    border: none;
+    padding: unset;
+}
+
+.star:hover{
+    cursor: pointer;
+}
+
