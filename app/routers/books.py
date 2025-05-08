@@ -50,15 +50,14 @@ def add_review(id: Annotated[int, Path(description="The ID of the book to which 
     """Adds a review to the book with the given ID."""
     try:
         book[id].review = review.review
-        return "Review successfully added"
+        return {"message": "Review successfully added"}
     except KeyError:
         raise HTTPException(status_code=404, detail="Book not found")
 
 @router.put("/{id}")
-def update_book(id: Annotated[int, Path(description="The ID of the book to update")], book: Book
-):
+def update_book(id: Annotated[int, Path(description="The ID of the book to update")], updated_book: Book):
     """Updates the book with the given ID."""
     if not id in book:
         raise HTTPException(status_code=404, detail="Book not found")
-    book[id] = book
-    return "Book successfully updated"
+    book[id] = updated_book
+    return {"message": "Book successfully updated"}

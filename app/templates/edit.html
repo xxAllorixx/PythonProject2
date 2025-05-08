@@ -1,22 +1,20 @@
 {% extends "base.html" %}
 {%  block content %}
 
-<form style="text-align: center;" method="post">
+<form style="text-align: center;">
   <label for="id">Scegli l'ID:</label><br>
   <input type="number" id="id" name="id" min="0" max="10" required><br>
   <label for="title">Title:</label><br>
   <input type="text" id="title" name="title" placeholder="Inserisci il titolo" required><br>
   <label for="author">Author:</label><br>
   <input type="text" id="author" name="author" placeholder="Inserisci l'autore" required><br>
-  <!--
-  <input type="number" id="review" name="review" min="1" max="5"><br><br>-->
   <label for="review">Review:</label><br>
   <div class="star-rating">
-    <span class="star" data-value="1">&#9734</span>
-    <span class="star" data-value="2">&#9734</span>
-    <span class="star" data-value="3">&#9734</span>
-    <span class="star" data-value="4">&#9734</span>
-    <span class="star" data-value="5">&#9734</span>
+    <button type="button" class="star" data-value="1">&#9734</button>
+    <button type="button" class="star" data-value="2">&#9734</button>
+    <button type="button" class="star" data-value="3">&#9734</button>
+    <button type="button" class="star" data-value="4">&#9734</button>
+    <button type="button" class="star" data-value="5">&#9734</button>
     <p class="current_rating">0 of 5</p>
   </div>
   <input type="hidden" name="review" id="review">
@@ -32,19 +30,32 @@
     {% endif %}
   </div>
 
-  <button type="submit" formaction="/add_book"  formmethod="post" id="addbook">Aggiungi</button>
+  <button type="submit" formaction="/add_book" formmethod="post">Aggiungi</button>
   <button type="submit" formaction="/delete_all_books"  formmethod="post" onclick="return confirm('Sei sicuro di voler eliminare tutti i libri?');" formnovalidate>Elimina tutti i libri</button>
   <button type="submit" formaction="/delete_a_book"  formmethod="post" onclick="return del_lib()" formnovalidate>Elimina il libro</button>
+  <button type="submit" formaction="/add_a_book_review" formmethod="post" onclick="return add_review()"  id="addreview" formnovalidate>Aggiungi recensione</button>
+  <button type="submit" formaction="/update_a_book" formmethod="post" onclick="return confirm('Sei sicuro di voler modificare il libro')">Aggiorna libro</button>
 </form>
 
 <script>
+
   function del_lib(){
     const idInput = document.getElementById("id");
     if(!idInput.value){
+
       alert("Inserisci l'ID del libro che vuoi cancellare");
       return false;
     }
     return confirm("Sei sicuro di voler eliminare il libro "+idInput.value);
+  }
+
+  function add_review(){
+    const idInput = document.getElementById("id");
+    if(!idInput.value){
+      alert("Inserisci l'ID del libro che vuoi recensire");
+      return false;
+    }
+    return true;
   }
 
   const stars = document.querySelectorAll('.star');
@@ -66,17 +77,16 @@
     }
   });
 
-  /*document.querySelector("form").addEventListener("submit", function(event) {
+  document.querySelector("form").addEventListener("submit", function(event) {
     const reviewValue = document.getElementById("review").value;
 
-    // Controlla se il bottone cliccato è quello con id "addbook"
-    if (event.submitter && event.submitter.id === "addbook") {
+    if (event.submitter && event.submitter.id === "addreview") {
       if (!reviewValue) {
         alert("Inserisci una recensione con le stelle.");
         event.preventDefault();
       }
     }
-  });*/
+  });
 
 </script>
 
