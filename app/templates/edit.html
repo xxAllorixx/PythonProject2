@@ -8,16 +8,18 @@
   <input type="text" id="title" name="title" placeholder="Inserisci il titolo" required><br>
   <label for="author">Author:</label><br>
   <input type="text" id="author" name="author" placeholder="Inserisci l'autore" required><br>
-  <!--<label for="review">Review:</label><br>
+  <!--
   <input type="number" id="review" name="review" min="1" max="5"><br><br>-->
-
+  <label for="review">Review:</label><br>
   <div class="star-rating">
     <button class="star">&#9734</button>
     <button class="star">&#9734</button>
     <button class="star">&#9734</button>
     <button class="star">&#9734</button>
     <button class="star">&#9734</button>
+    <p class="current_rating">0 of 5</p>
   </div>
+  <input type="hidden" name="review" id="review" required>
 
   <!-- Messaggio di feedback -->
   <div style="min-height: 1.5em;">
@@ -30,7 +32,7 @@
     {% endif %}
   </div>
 
-  <button type="submit" formaction="/add_book"  formmethod="post">Aggiungi</button>
+  <button type="submit" formaction="/add_book"  formmethod="post" id="addbook">Aggiungi</button>
   <button type="submit" formaction="/delete_all_books"  formmethod="post" onclick="return confirm('Sei sicuro di voler eliminare tutti i libri?');" formnovalidate>Elimina tutti i libri</button>
   <button type="submit" formaction="/delete_a_book"  formmethod="post" onclick="return del_lib()" formnovalidate>Elimina il libro</button>
 </form>
@@ -46,10 +48,12 @@
   }
 
   const stars = document.querySelectorAll('.star');
-
+  let current_rating = document.querySelector('.current_rating');
   stars.forEach((star, i) => {
     star.onclick = function () {
       let current_star = i + 1;
+      current_rating.innerText = `${current_star} of 5`;
+      document.getElementById('review').value = current_star;
 
       stars.forEach((star, j) => {
         if (current_star >= j+1) {
@@ -59,6 +63,13 @@
           star.innerHTML = "&#9734";
         }
       });
+    }
+  });
+  document.querySelector("form").addEventListener("submit", function(event) {
+    const reviewValue = document.getElementById("review").value;
+    if (!reviewValue) {
+      alert("Seleziona una valutazione con le stelle.");
+      event.preventDefault();  // Blocca l'invio
     }
   });
 
