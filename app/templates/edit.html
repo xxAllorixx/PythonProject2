@@ -12,14 +12,14 @@
   <input type="number" id="review" name="review" min="1" max="5"><br><br>-->
   <label for="review">Review:</label><br>
   <div class="star-rating">
-    <button class="star">&#9734</button>
-    <button class="star">&#9734</button>
-    <button class="star">&#9734</button>
-    <button class="star">&#9734</button>
-    <button class="star">&#9734</button>
+    <span class="star" data-value="1">&#9734</span>
+    <span class="star" data-value="2">&#9734</span>
+    <span class="star" data-value="3">&#9734</span>
+    <span class="star" data-value="4">&#9734</span>
+    <span class="star" data-value="5">&#9734</span>
     <p class="current_rating">0 of 5</p>
   </div>
-  <input type="hidden" name="review" id="review" required>
+  <input type="hidden" name="review" id="review">
 
   <!-- Messaggio di feedback -->
   <div style="min-height: 1.5em;">
@@ -65,13 +65,18 @@
       });
     }
   });
-  document.querySelector("form").addEventListener("submit", function(event) {
+
+  /*document.querySelector("form").addEventListener("submit", function(event) {
     const reviewValue = document.getElementById("review").value;
-    if (!reviewValue) {
-      alert("Seleziona una valutazione con le stelle.");
-      event.preventDefault();  // Blocca l'invio
+
+    // Controlla se il bottone cliccato è quello con id "addbook"
+    if (event.submitter && event.submitter.id === "addbook") {
+      if (!reviewValue) {
+        alert("Inserisci una recensione con le stelle.");
+        event.preventDefault();
+      }
     }
-  });
+  });*/
 
 </script>
 

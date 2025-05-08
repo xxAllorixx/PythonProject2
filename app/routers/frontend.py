@@ -1,9 +1,11 @@
 from fastapi import APIRouter, Request, HTTPException, Query, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from typing import Optional
 from app.data.books import book
 from app.models.book import Book
 from app.routers.books import add_book, delete_book, delete_all_books, get_book_by_id
+
 
 templates = Jinja2Templates(directory="app/templates")
 router = APIRouter()
@@ -28,8 +30,16 @@ def show_form(request: Request):
     return templates.TemplateResponse(request=request, name="edit.html")
 
 @router.post("/add_book", response_class=HTMLResponse)
-def add_book_form(request: Request, id: int = Form(...), title: str = Form(...), author: str = Form(...), review: int = Form(...)):
-    new_book = Book(id=id, title=title, author=author, review=review)
+def add_book_form(request: Request, id: int = Form(...), title: str = Form(...), author: str = Form(...), review: Optional[str] = Form(None)):
+
+    try:
+        # Se review è una stringa vuota o solo spazi, la consideriamo None
+        review_int = int(review) if review.strip() else None
+    except ValueError:
+        review_int = None  # se contiene valori non convertibili in int
+
+    new_book = Book(id=id, title=title, author=author, review=review_int)
+
     try:
         result = add_book(new_book)  # <-- chiama la funzione del router books
         message = result["message"]
