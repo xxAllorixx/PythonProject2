@@ -4,7 +4,8 @@ from fastapi.templating import Jinja2Templates
 from typing import Optional
 from app.data.books import book
 from app.models.book import Book
-from app.routers.books import add_book, delete_book, delete_all_books, get_book_by_id
+from app.models.review import Review
+from app.routers.books import add_book, delete_book, delete_all_books, get_book_by_id, add_review, update_book
 
 
 templates = Jinja2Templates(directory="app/templates")
@@ -32,15 +33,14 @@ def show_form(request: Request):
 @router.post("/add_book", response_class=HTMLResponse)
 def add_book_form(request: Request, id: int = Form(...), title: str = Form(...), author: str = Form(...), review: Optional[str] = Form(None)):
     try:
-        # Se review è una stringa vuota o solo spazi, la consideriamo None
         review_int = int(review) if review.strip() else None
     except ValueError:
-        review_int = None  # se contiene valori non convertibili in int
+        review_int = None
 
     new_book = Book(id=id, title=title, author=author, review=review_int)
 
     try:
-        result = add_book(new_book)  # <-- chiama la funzione del router books
+        result = add_book(new_book)
         message = result["message"]
     except HTTPException as error:
         message = error.detail
@@ -67,7 +67,7 @@ def show_search_form(request: Request):
     return templates.TemplateResponse(request=request, name="search.html")
 
 @router.get("/find_a_book", response_class=HTMLResponse)
-def get_book(request: Request, id: int = Query(...)):
+def search(request: Request, id: int = Query(...)):
     try:
         result = get_book_by_id(id)  # <-- chiama la funzione del router books
         message = f"Libro con {result} è stato trovato."
@@ -75,6 +75,40 @@ def get_book(request: Request, id: int = Query(...)):
         message = error.detail
 
     return templates.TemplateResponse(request=request, name="search.html", context={"message": message})
+
+@router.post("/add_a_book_review", response_class=HTMLResponse)
+def add_a_book_review(request: Request, id: int = Form(...), review: str = Form(...)):
+    review_int = int(review)
+    new_review = Review(review=review_int)
+
+    try:
+        result = add_review(id, new_review)
+        message = result["message"]
+    except HTTPException as error:
+        message = error.detail
+
+    return templates.TemplateResponse(request=request, name="edit.html",context = {"message": message})
+
+@router.post("/update_a_book", response_class=HTMLResponse)
+def update(request: Request, id: int = Form(...), title: str = Form(...), author: str = Form(...), review: Optional[str] = Form(None)):
+    try:
+        review_int = int(review) if review.strip() else None
+    except ValueError:
+        review_int = None
+
+    updated_book = Book(id=id, title=title, author=author, review=review_int)
+
+    try:
+        result = update_book(id, updated_book)
+        message = result["message"]
+    except HTTPException as error:
+        message = error.detail
+
+    return templates.TemplateResponse(request=request, name="edit.html",context = {"message": message})
+
+
+
+
 
 
 
