@@ -31,7 +31,6 @@ def show_form(request: Request):
 
 @router.post("/add_book", response_class=HTMLResponse)
 def add_book_form(request: Request, id: int = Form(...), title: str = Form(...), author: str = Form(...), review: Optional[str] = Form(None)):
-
     try:
         # Se review è una stringa vuota o solo spazi, la consideriamo None
         review_int = int(review) if review.strip() else None
